@@ -1062,6 +1062,27 @@ export default function WifiShareApp({ user }) {
         </div>
       </div>
     )}
+      {/* Footer */}
+      <div style={{ textAlign:"center", padding:"24px 16px 32px", fontSize:12, color:"var(--ink-soft)" }}>
+        <p style={{ marginBottom:8 }}>
+          Tu veux voir plus de produits de Kivu Culture Hub ?{" "}
+          <a href="https://kivu-culture-hub-78805.web.app" target="_blank" rel="noopener noreferrer" style={{ color:"var(--teal)", fontWeight:600 }}>
+            kivu-culture-hub-78805.web.app
+          </a>{" "}
+          ou{" "}
+          <a href="https://kivujobia.web.app/" target="_blank" rel="noopener noreferrer" style={{ color:"var(--teal)", fontWeight:600 }}>
+            kivujobia.web.app
+          </a>
+        </p>
+        <p style={{ marginBottom:8 }}>
+          <a href="mailto:kivuculturehub@gmail.com?subject=Commentaire WifiShare" style={{ color:"var(--amber)", fontWeight:600 }}>
+            Envoyer un commentaire ou une suggestion au concepteur
+          </a>
+        </p>
+        <p style={{ marginBottom:4 }}>Contact : kivuculturehub@gmail.com</p>
+        <p style={{ marginBottom:4 }}>Tel : +243972212629</p>
+        <p style={{ fontWeight:700, color:"var(--ink)" }}>— MBvictor, concepteur</p>
+      </div>
     </div>
   );
 }
