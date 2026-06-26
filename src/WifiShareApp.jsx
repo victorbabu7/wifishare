@@ -360,6 +360,18 @@ export default function WifiShareApp({ user }) {
     setResLoading(false);
     if (!error) setReservation(data);
   }
+  async function reportUser(reportedUserId, resId) {
+    const reason = window.prompt("Decrivez le probleme rencontre avec cette personne :");
+    if (!reason || !reason.trim()) return;
+    const { error } = await supabase.from("reports").insert({
+      reporter_id: user.id,
+      reported_user_id: reportedUserId,
+      reservation_id: resId || null,
+      reason: reason.trim(),
+    });
+    if (!error) alert("Signalement envoye. Merci de nous aider a garder WifiShare sur.");
+    else alert("Erreur lors de l'envoi du signalement.");
+  }
   async function cancelReservation() {
     if (!reservation) return;
     await supabase.from("reservations").delete().eq("id", reservation.id);
@@ -780,6 +792,12 @@ export default function WifiShareApp({ user }) {
                         Paiement recu
                       </button>
                     )}
+                    <button className="btn-coral-outline" style={{ width:"auto", padding:"8px 10px", fontSize:12 }} onClick={() => reportUser(res.client_id, res.id)}>
+                      Signaler
+                    </button>
+                    <button className="btn-coral-outline" style={{ width:"auto", padding:"8px 10px", fontSize:12 }} onClick={() => reportUser(res.client_id, res.id)}>
+                      Signaler
+                    </button>
                   </div>
                 ))}
 
@@ -893,6 +911,9 @@ export default function WifiShareApp({ user }) {
                     <Star size={16}/> Laisser un avis
                   </button>
                   <button className="btn-coral-outline" onClick={cancelReservation}>Annuler la reservation</button>
+                  <button onClick={() => reportUser(selectedListing.user_id, reservation.id)} style={{ background:"none", border:"none", color:"var(--ink-soft)", fontSize:12, cursor:"pointer", textAlign:"center" }}>
+                    Signaler un probleme avec cet hote
+                  </button>
                 </div>
               )}
               {reservation?.status === "accepted" && (
