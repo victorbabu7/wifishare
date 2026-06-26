@@ -514,7 +514,7 @@ export default function WifiShareApp({ user }) {
       <div style={{ maxWidth:420, margin:"0 auto", paddingBottom:40 }}>
 
         {/* Header */}
-        <div style={{ background:"linear-gradient(135deg, #5B5FEF 0%, #8B5FEF 50%, #FF8B5C 100%)", boxShadow:"0 4px 20px rgba(91,95,239,0.25)" }}>
+        <div style={{ background:"#FF8B5C", boxShadow:"0 4px 20px rgba(255,139,92,0.3)" }}>
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"14px 16px" }}>
             <div style={{ display:"flex", alignItems:"center", gap:8 }}>
               <div style={{ background:"rgba(255,255,255,0.25)", width:34, height:34, borderRadius:10, display:"flex", alignItems:"center", justifyContent:"center" }}>
@@ -1064,6 +1064,9 @@ export default function WifiShareApp({ user }) {
     )}
       {/* Footer */}
       <div style={{ textAlign:"center", padding:"24px 16px 32px", fontSize:12, color:"var(--ink-soft)" }}>
+        <p style={{ marginBottom:8, fontWeight:600, color:"var(--teal)" }}>
+          Meme avec tres peu de megas, vous pouvez ouvrir WifiShare et chercher du secours autour de vous.
+        </p>
         <p style={{ marginBottom:8 }}>
           Tu veux voir plus de produits de Kivu Culture Hub ?{" "}
           <a href="https://kivu-culture-hub-78805.web.app" target="_blank" rel="noopener noreferrer" style={{ color:"var(--teal)", fontWeight:600 }}>
