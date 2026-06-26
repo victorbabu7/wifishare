@@ -28,6 +28,7 @@ export default function Intro({ onContinue }) {
         </div>
         <h1 style={styles.title}>Bienvenue sur WifiShare</h1>
         <p style={styles.subtitle}>Partagez ou trouvez du Wifi autour de vous</p>
+        <p style={styles.dataNote}>Meme avec tres peu de megas, vous pouvez ouvrir l'app et chercher du secours autour de vous.</p>
 
         <div style={styles.tabs}>
           <button onClick={() => setTab("client")} style={tab==="client" ? styles.tabActive : styles.tab}>Je cherche du Wifi</button>
@@ -77,7 +78,8 @@ const styles = {
     margin: "0 auto 16px",
   },
   title: { textAlign: "center", fontSize: 24, fontWeight: 800, color: "#1A1B2E", margin: "0 0 6px" },
-  subtitle: { textAlign: "center", fontSize: 14, color: "#6B6D85", margin: "0 0 20px" },
+  subtitle: { textAlign: "center", fontSize: 14, color: "#6B6D85", margin: "0 0 8px" },
+  dataNote: { textAlign: "center", fontSize: 12, color: "#5B5FEF", fontWeight: 600, margin: "0 0 20px", background:"#E8E9FD", padding:"8px 12px", borderRadius:10 },
   tabs: { display: "flex", gap: 8, background: "#F4F5FB", borderRadius: 12, padding: 4 },
   tab: { flex: 1, padding: "10px 8px", border: "none", background: "transparent", borderRadius: 9, fontSize: 13, fontWeight: 600, color: "#6B6D85", cursor: "pointer" },
   tabActive: { flex: 1, padding: "10px 8px", border: "none", background: "#5B5FEF", borderRadius: 9, fontSize: 13, fontWeight: 700, color: "#fff", cursor: "pointer" },
