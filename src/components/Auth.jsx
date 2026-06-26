@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { supabase } from "../lib/supabaseClient";
 
-export default function Auth() {
+export default function Auth({ onShowIntro }) {
   const [mode, setMode] = useState("login"); // login | signup | reset
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -46,6 +46,7 @@ export default function Auth() {
         <div style={styles.logoCircle}>
           <span style={{ fontSize: 30, fontWeight: 800, color: "#fff" }}>W</span>
         </div>
+        <button onClick={onShowIntro} style={styles.howItWorks}>Comment ca fonctionne ?</button>
         <h2 style={styles.title}>
           {mode === "signup" ? "Creer un compte" : mode === "reset" ? "Mot de passe oublie" : "Bon retour"}
         </h2>
@@ -195,4 +196,5 @@ const styles = {
   error: { color: "#D9534F", fontSize: 13, margin: 0 },
   info: { color: "#0F6B5C", fontSize: 13, margin: 0, background: "#E6F4F1", padding: 10, borderRadius: 8 },
   contact: { marginTop: 20, fontSize: 11, color: "#999", textAlign: "center" },
+  howItWorks: { display:"block", margin:"0 auto 14px", background:"none", border:"none", color:"#5B5FEF", fontWeight:700, fontSize:13, cursor:"pointer", textDecoration:"underline" },
 };
