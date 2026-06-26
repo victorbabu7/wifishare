@@ -448,18 +448,19 @@ export default function WifiShareApp({ user }) {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap');
         :root{
-          --bg:#EEF3EC; --surface:#FFFFFF; --ink:#16241F; --ink-soft:#4B5F56;
-          --teal:#0F6B5C; --teal-dark:#0B4F44; --teal-pale:#DCEAE5;
-          --amber:#E8862B; --amber-dark:#C76A1A; --amber-pale:#FBE4CB;
-          --coral:#D9534F; --coral-pale:#F7DCDA; --border:#D9E2DA;
+          --bg:#F4F5FB; --surface:#FFFFFF; --ink:#1A1B2E; --ink-soft:#6B6D85;
+          --teal:#5B5FEF; --teal-dark:#4347C4; --teal-pale:#E8E9FD;
+          --amber:#FF8B5C; --amber-dark:#E66B3A; --amber-pale:#FFE5D9;
+          --coral:#EF5B7A; --coral-pale:#FDE3EA; --border:#E5E6F0;
         }
         *{ box-sizing:border-box; margin:0; padding:0; }
         .app-shell{ background:var(--bg); color:var(--ink); min-height:100vh; font-family:'Work Sans',sans-serif; }
         .font-display{ font-family:'Sora',sans-serif; }
         .font-body{ font-family:'Work Sans',sans-serif; }
         .font-mono{ font-family:'JetBrains Mono',monospace; }
-        .card{ background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:14px; }
-        .btn-amber{ background:var(--amber); color:#fff; font-weight:700; font-family:'Sora',sans-serif; border:none; border-radius:12px; padding:11px 16px; display:flex; align-items:center; justify-content:center; gap:6px; cursor:pointer; width:100%; }
+        .card{ background:var(--surface); border:1px solid var(--border); border-radius:18px; padding:14px; box-shadow:0 2px 12px rgba(91,95,239,0.06); transition:box-shadow 0.2s; }
+        .card:hover{ box-shadow:0 6px 20px rgba(91,95,239,0.12); }
+        .btn-amber{ background:linear-gradient(135deg, #FF8B5C, #EF5B7A); color:#fff; font-weight:700; font-family:'Sora',sans-serif; border:none; border-radius:14px; padding:12px 16px; display:flex; align-items:center; justify-content:center; gap:6px; cursor:pointer; width:100%; box-shadow:0 4px 14px rgba(255,139,92,0.35); }
         .btn-amber:disabled{ background:#D8CDBE; }
         .btn-teal-outline{ background:transparent; color:var(--teal); font-weight:700; font-family:'Sora',sans-serif; border:1.5px solid var(--teal); border-radius:12px; padding:10px 16px; display:flex; align-items:center; justify-content:center; gap:6px; cursor:pointer; width:100%; }
         .btn-coral-outline{ background:transparent; color:var(--coral); font-weight:600; border:1.5px solid var(--coral); border-radius:12px; padding:8px 14px; font-size:13px; cursor:pointer; }
@@ -513,16 +514,16 @@ export default function WifiShareApp({ user }) {
       <div style={{ maxWidth:420, margin:"0 auto", paddingBottom:40 }}>
 
         {/* Header */}
-        <div style={{ background:"var(--surface)", borderBottom:"1px solid var(--border)" }}>
-          <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"12px 16px" }}>
+        <div style={{ background:"linear-gradient(135deg, #5B5FEF 0%, #8B5FEF 50%, #FF8B5C 100%)", boxShadow:"0 4px 20px rgba(91,95,239,0.25)" }}>
+          <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"14px 16px" }}>
             <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-              <div style={{ background:"var(--teal)", width:32, height:32, borderRadius:10, display:"flex", alignItems:"center", justifyContent:"center" }}>
-                <Wifi size={17} color="#fff"/>
+              <div style={{ background:"rgba(255,255,255,0.25)", width:34, height:34, borderRadius:10, display:"flex", alignItems:"center", justifyContent:"center" }}>
+                <Wifi size={18} color="#fff"/>
               </div>
-              <span className="font-display" style={{ fontWeight:800, fontSize:18 }}>WifiShare</span>
+              <span className="font-display" style={{ fontWeight:800, fontSize:18, color:"#fff" }}>WifiShare</span>
             </div>
             <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-              <div style={{ background:"var(--bg)", borderRadius:12, padding:3, display:"flex" }}>
+              <div style={{ background:"rgba(255,255,255,0.2)", borderRadius:12, padding:3, display:"flex" }}>
                 <button className={`seg-btn ${mode==="client" ? "seg-btn-active" : ""}`} onClick={() => setMode("client")}>
                   <Users size={14}/> Client
                 </button>
