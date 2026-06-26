@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Wifi, Search, Send, CreditCard, Key, Home, UserCheck, Wallet } from "lucide-react";
+import { supabase } from "../lib/supabaseClient";
 
 export default function Intro({ onContinue }) {
   const [tab, setTab] = useState("client");
@@ -48,6 +49,12 @@ export default function Intro({ onContinue }) {
         </div>
 
         <button onClick={onContinue} style={styles.btn}>Retour</button>
+        <button onClick={async () => {
+          const { error } = await supabase.auth.signInAnonymously();
+          if (error) alert("Mode demo indisponible: " + error.message);
+        }} style={styles.demoBtn}>
+          Essayer en mode demo (sans compte)
+        </button>
       </div>
     </div>
   );
@@ -88,4 +95,5 @@ const styles = {
   stepTitle: { fontSize: 14, fontWeight: 700, color: "#1A1B2E", margin: "0 0 2px" },
   stepText: { fontSize: 12, color: "#6B6D85", margin: 0 },
   btn: { marginTop: 24, width: "100%", padding: 14, borderRadius: 12, border: "none", background: "linear-gradient(135deg, #FF8B5C, #EF5B7A)", color: "#fff", fontWeight: 700, fontSize: 15, cursor: "pointer" },
+  demoBtn: { marginTop: 10, width: "100%", padding: 12, borderRadius: 12, border: "1.5px solid #5B5FEF", background: "transparent", color: "#5B5FEF", fontWeight: 700, fontSize: 13, cursor: "pointer" },
 };

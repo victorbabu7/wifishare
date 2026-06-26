@@ -152,12 +152,25 @@ export default function WifiShareApp({ user }) {
   const [viewMode, setViewMode] = useState("list");
   const [notifBanner, setNotifBanner] = useState(null);
   const [searchRadius, setSearchRadius] = useState(10);
+  const [isOffline, setIsOffline] = useState(!navigator.onLine);
+  const [isOffline, setIsOffline] = useState(!navigator.onLine);
   const [userPos, setUserPos] = useState(null);
   const [hostChatTarget, setHostChatTarget] = useState(null);
   const [hostChatInput, setHostChatInput] = useState("");
   const [myReviews, setMyReviews] = useState([]);
   const [saving, setSaving] = useState(false);
 
+  // Detection connexion reseau
+  useEffect(() => {
+    function handleOnline() { setIsOffline(false); }
+    function handleOffline() { setIsOffline(true); }
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
+    return () => {
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+    };
+  }, []);
   // Demande permission notifications navigateur
   useEffect(() => {
     if ("Notification" in window && Notification.permission === "default") {
@@ -214,10 +227,17 @@ export default function WifiShareApp({ user }) {
   // Charger annonces (client)
   useEffect(() => {
     if (mode !== "client") return;
-    supabase.from("listings").select("*, profiles(name,phone)")
+    supabase.from("listings").select("*, profiles(name,phone), reviews(stars)")
       .eq("online", true)
       .neq("user_id", user.id)
-      .then(({ data }) => setListings(data || []));
+      .then(({ data }) => {
+        const withAvg = (data || []).map(l => {
+          const stars = (l.reviews || []).map(r => r.stars);
+          const avg = stars.length ? stars.reduce((a,b)=>a+b,0) / stars.length : null;
+          return { ...l, avgRating: avg, reviewCount: stars.length };
+        });
+        setListings(withAvg);
+      });
   }, [mode]);
 
   // Charger mon annonce (hôte)
@@ -490,6 +510,15 @@ export default function WifiShareApp({ user }) {
         input[type="text"]:focus, input[type="number"]:focus, textarea:focus{ outline:none; border-color:var(--teal); }
         label{ font-size:12px; font-weight:600; color:var(--ink-soft); display:block; margin-bottom:4px; }
       `}</style>
+      {isOffline && (
+        <div style={{
+          position:"fixed", top:0, left:0, right:0, zIndex:10000,
+          background:"#EF5B7A", color:"white", textAlign:"center",
+          padding:"10px 16px", fontWeight:600, fontSize:14,
+        }}>
+          Pas de connexion internet. Reessayez quand vous serez connecte.
+        </div>
+      )}
       {notifBanner && (
         <div onClick={() => {
             if (typeof notifBanner === "object" && notifBanner.resId) {
@@ -612,8 +641,18 @@ export default function WifiShareApp({ user }) {
                       </span>
                       <span style={{ width:8, height:8, borderRadius:"50%", background:"var(--teal)", display:"inline-block" }}/>
                     </div>
-                    <div style={{ display:"flex", gap:8, marginTop:4 }}>
+                    <div style={{ display:"flex", gap:8, marginTop:4, alignItems:"center", flexWrap:"wrap" }}>
                       <TypeBadge type={l.type}/>
+                      {l.avgRating !== null && l.avgRating !== undefined && (
+                        <span style={{ display:"flex", alignItems:"center", gap:3, fontSize:12, color:"var(--ink-soft)" }}>
+                          <Star size={12} fill="#FFB800" color="#FFB800"/> {l.avgRating.toFixed(1)} ({l.reviewCount})
+                        </span>
+                      )}
+                      {l.reviewCount >= 3 && (
+                        <span style={{ display:"flex", alignItems:"center", gap:3, fontSize:11, fontWeight:700, color:"var(--teal)", background:"var(--teal-pale)", padding:"2px 8px", borderRadius:999 }}>
+                          <ShieldCheck size={12}/> Verifie
+                        </span>
+                      )}
                     </div>
                   </div>
                   <div style={{ textAlign:"right" }}>
@@ -672,6 +711,14 @@ export default function WifiShareApp({ user }) {
                   </div>
                   <p style={{ fontSize:13, color:"var(--ink-soft)" }}>{myListing.description}</p>
                   {myListing.hours && <p style={{ fontSize:12, color:"var(--ink-soft)", display:"flex", alignItems:"center", gap:4 }}><Clock size={13}/> {myListing.hours}</p>}
+                  <button className="btn-amber" onClick={() => {
+                    const msg = encodeURIComponent(
+                      `Decouvrez mon Wifi "${myListing.wifi_name || "WifiShare"}" sur WifiShare ! ${cheapest(myListing) ? `A partir de ${formatFC(cheapest(myListing).price)} / ${cheapest(myListing).label}` : ""} ${window.location.origin}`
+                    );
+                    window.open(`https://wa.me/?text=${msg}`, "_blank");
+                  }}>
+                    Partager sur WhatsApp
+                  </button>
                   <div style={{ display:"flex", gap:8 }}>
                     <button className="btn-coral-outline" style={{flex:1}} onClick={editListing}>Modifier</button>
                     <button className="btn-coral-outline" style={{flex:1}} onClick={deleteListing}>Supprimer</button>
