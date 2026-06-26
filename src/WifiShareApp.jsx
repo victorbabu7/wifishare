@@ -638,7 +638,15 @@ export default function WifiShareApp({ user }) {
                 </div>
                 <p className="font-display" style={{ fontWeight:600 }}>Pas encore d'annonce</p>
                 <p style={{ fontSize:14, color:"var(--ink-soft)" }}>Crée ton annonce pour partager ta connexion.</p>
-                <button className="btn-amber" style={{ width:"auto", padding:"10px 24px" }} onClick={() => { setWizardOpen(true); setWizardStep(1); setWizardType(null); }}>
+                <button className="btn-amber" style={{ width:"auto", padding:"10px 24px" }} onClick={() => {
+                  if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                      (pos) => setUserPos([pos.coords.latitude, pos.coords.longitude]),
+                      () => {}
+                    );
+                  }
+                  setWizardOpen(true); setWizardStep(1); setWizardType(null);
+                }}>
                   <Plus size={16}/> Créer mon annonce
                 </button>
               </div>
