@@ -153,7 +153,6 @@ export default function WifiShareApp({ user }) {
   const [notifBanner, setNotifBanner] = useState(null);
   const [searchRadius, setSearchRadius] = useState(10);
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
-  const [isOffline, setIsOffline] = useState(!navigator.onLine);
   const [userPos, setUserPos] = useState(null);
   const [hostChatTarget, setHostChatTarget] = useState(null);
   const [hostChatInput, setHostChatInput] = useState("");
