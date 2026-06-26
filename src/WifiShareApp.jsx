@@ -766,8 +766,8 @@ export default function WifiShareApp({ user }) {
                 ))}
                 <p className="font-display" style={{ fontWeight:600, fontSize:14 }}>Conversations actives</p>
                 {myAcceptedReservations.map(res => (
-                  <div key={res.id} className="card" style={{ display:"flex", alignItems:"center", gap:12 }}>
-                    <div style={{ flex:1 }}>
+                  <div key={res.id} className="card" style={{ display:"flex", flexDirection:"column", gap:10 }}>
+                    <div>
                       <p style={{ fontWeight:600, fontSize:14 }}>{res.profiles?.name || "Client"}</p>
                       <p style={{ fontSize:12, color:"var(--ink-soft)" }}>Demande acceptee</p>
                       {res.profiles?.phone && (
@@ -777,26 +777,25 @@ export default function WifiShareApp({ user }) {
                         <p style={{ fontSize:12, color:"var(--teal-dark)", fontWeight:600 }}>Paye - mot de passe partage</p>
                       )}
                     </div>
-                    <button className="btn-amber" style={{ width:"auto", padding:"8px 12px", fontSize:13 }} onClick={() => setHostChatTarget(res)}>
-                      <MessageCircle size={16}/>
-                    </button>
-                    <button className="btn-coral-outline" style={{ width:"auto", padding:"8px 10px", fontSize:12 }} onClick={() => clearConversation(res.id)}>
-                      Effacer
-                    </button>
-                    <button className="btn-coral-outline" style={{ width:"auto", padding:"8px 10px", fontSize:12 }} onClick={() => cancelReservationAsHost(res.id)}>
-                      Annuler
-                    </button>
-                    {res.status === "accepted" && (
-                      <button className="btn-amber" style={{ width:"auto", padding:"8px 10px", fontSize:12 }} onClick={() => markAsPaid(res.id)}>
-                        Paiement recu
+                    <div style={{ display:"flex", flexWrap:"wrap", gap:8 }}>
+                      <button className="btn-amber" style={{ width:"auto", padding:"8px 12px", fontSize:13 }} onClick={() => setHostChatTarget(res)}>
+                        <MessageCircle size={16}/>
                       </button>
-                    )}
-                    <button className="btn-coral-outline" style={{ width:"auto", padding:"8px 10px", fontSize:12 }} onClick={() => reportUser(res.client_id, res.id)}>
-                      Signaler
-                    </button>
-                    <button className="btn-coral-outline" style={{ width:"auto", padding:"8px 10px", fontSize:12 }} onClick={() => reportUser(res.client_id, res.id)}>
-                      Signaler
-                    </button>
+                      {res.status === "accepted" && (
+                        <button className="btn-amber" style={{ width:"auto", padding:"8px 10px", fontSize:12 }} onClick={() => markAsPaid(res.id)}>
+                          Paiement recu
+                        </button>
+                      )}
+                      <button className="btn-coral-outline" style={{ width:"auto", padding:"8px 10px", fontSize:12 }} onClick={() => clearConversation(res.id)}>
+                        Effacer
+                      </button>
+                      <button className="btn-coral-outline" style={{ width:"auto", padding:"8px 10px", fontSize:12 }} onClick={() => cancelReservationAsHost(res.id)}>
+                        Annuler
+                      </button>
+                      <button className="btn-coral-outline" style={{ width:"auto", padding:"8px 10px", fontSize:12 }} onClick={() => reportUser(res.client_id, res.id)}>
+                        Signaler
+                      </button>
+                    </div>
                   </div>
                 ))}
 
