@@ -151,7 +151,7 @@ export default function WifiShareApp({ user }) {
   const [myAcceptedReservations, setMyAcceptedReservations] = useState([]);
   const [viewMode, setViewMode] = useState("list");
   const [notifBanner, setNotifBanner] = useState(null);
-  const [searchRadius, setSearchRadius] = useState(10);
+  const [searchRadius, setSearchRadius] = useState(20000);
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
   const [userPos, setUserPos] = useState(null);
   const [hostChatTarget, setHostChatTarget] = useState(null);
@@ -594,8 +594,8 @@ export default function WifiShareApp({ user }) {
 
             {/* Rayon de recherche */}
             <div className="card" style={{ display:"flex", flexDirection:"column", gap:6 }}>
-              <label style={{ fontSize:13, fontWeight:600 }}>Rayon de recherche : {searchRadius} km</label>
-              <input type="range" min="1" max="50" value={searchRadius}
+              <label style={{ fontSize:13, fontWeight:600 }}>Rayon de recherche : {searchRadius >= 20000 ? "Tous (sans limite)" : searchRadius + " km"}</label>
+              <input type="range" min="1" max="20000" value={searchRadius}
                 onChange={e => setSearchRadius(Number(e.target.value))}/>
             </div>
             {/* Toggle vue */}
